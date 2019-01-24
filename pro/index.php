@@ -11,6 +11,21 @@ require "server/functions.php";
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers|Old+Standard+TT">
+    <script>
+        function doSearch(str) {
+            console.log(str)
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("content").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "search.php?search=" + str, true);
+            xmlhttp.send();
+            document.getElementById('content').innerHTML = str;
+        }
+
+    </script>
 </head>
 <body>
 
@@ -18,7 +33,7 @@ require "server/functions.php";
     <div class="row">
         <div class="col-12 no-padding">
             <nav class="navbar navbar-light bg-light navbar-expand-sm fixed-top">
-                <a class="navbar-brand" href="index.html"><img src="media/logo.png" width="175" height="50" alt="logo">
+                <a class="navbar-brand" href="index.php"><img src="media/logo.png" width="175" height="50" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button"
                         data-toggle="collapse"
@@ -30,10 +45,10 @@ require "server/functions.php";
                         <form class="form-inline">
                             <div class="input-group">
                                 <input type="search" class="form-control"
-                                       id="search-bar" name="search"
+                                       id="search-bar" name="search" onkeyup="doSearch(this.value)" 
                                        placeholder="Find Mobile Phones, Laptops, and more..">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary btn-lg" type="button"><i class="fas fa-search"></i></button>
+                                    <button class="btn btn-outline-secondary btn-lg" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -96,9 +111,7 @@ require "server/functions.php";
     <article id="content" class="container-fluid bg-white">
 
         <div class="row">
-            <div class="col">
-                Content
-            </div>
+                <?php getPro(); ?>
         </div>
     </article>
 
